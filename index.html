@@ -1,4 +1,4 @@
-﻿<!DOCTYPE HEML PUBLIC>
+<!DOCTYPE HEML PUBLIC>
 <html>
     <head>
     <meta charset="utf-8" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
@@ -18,18 +18,7 @@
                 padding: 0;
                 border: 0;
             }
-            .nav
-            {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 27px;
-                background-color: white;
-                color: black;
-                text-align: center;
-                line-height: 25px;
-            }
+
             a
             {
                 color: black;
@@ -98,15 +87,26 @@
                 margin: 0px;
             }
             h1 {
-                width: 40rem;
-                font-family: "华文行楷";
-                font-size: 6rem;
+                width: 1000rem;
+                font-family: "Comic Sans MS", cursive, sans-serif;
+                font-size: 5rem;
+                color: #FF00FF;
+                /*text-align: center;*/
+                position: absolute;
+                left:60%;
+                top: 0%;
+                margin-left: 0;
+            }
+			            h2 {
+                width: 1000rem;
+                font-family: "Comic Sans MS", cursive, sans-serif;
+                font-size: 5rem;
                 color: red;
                 /*text-align: center;*/
                 position: absolute;
-                left: 10%;
-                top: 100;
-                margin-left: 10;
+                left:60%;
+                top: 12%;
+                margin-left: 0;
             }
             /* 触发弹窗图片的样式 */
             #myImg {
@@ -114,124 +114,26 @@
                 cursor: pointer;
                 transition: 0.3s;
             }
-             
+
             #myImg:hover {opacity: 0.7;}
              
-            /* 弹窗背景 */
-            .modal {
-                display: none; /* Hidden by default */
-                /*position: fixed; /* Stay in place */*/
-                z-index: 1; /* Sit on top */
-               /* padding-top: 0;  Location of the box */
-                margin: 0 auto;
-                max-width: 700px;
-                /*left: 100;
-                top: 50;
-                right: 50;
-                bottom: 50;*/
-                /*width: 100%; /* Full width */
-                /*height: 100%; /* Full height */
-                /* overflow: auto; Enable scroll if needed */
-                background-color: rgb(0,0,0); /* Fallback color */
-                background-color: rgba(0,0,0,0.0); /* Black w/ opacity */
-            }
-             
-            /* 图片 */
-            .modal-content {
-                margin: 0 auto;
-                display: block;
-                /*height: 100%;
-                width: 100%;*/
-                max-width: 700px;
-                max-height: 600px;
-            }
-                          
-            /* 添加动画 */
-            .modal-content, #caption { 
-                -webkit-animation-name: zoom;
-                -webkit-animation-duration: 0.6s;
-                animation-name: zoom;
-                animation-duration: 0.6s;
-            }
-             
-            @-webkit-keyframes zoom {
-                from {-webkit-transform:scale(0)} 
-                to {-webkit-transform:scale(1)}
-            }
-             
-            @keyframes zoom {
-                from {transform:scale(0)} 
-                to {transform:scale(1)}
-            }
-             
-            /* 关闭按钮 */
-            .close {
-                position: absolute;
-                /*top: 15px;
-                right: 35px;*/
-                margin: 0 auto;
-                color: lightgreen;
-                font-size: 66px;
-                font-weight: bold;
-                transition: 0.3s;
-            }
-             
-            .close:hover,
-            .close:focus {
-                color: #bbb;
-                text-decoration: none;
-                cursor: pointer;
-            }
-             
-            /* 小屏幕中图片宽度为 100% */
-            @media only screen and (max-height: 600px){
-                .modal-content {
-                    /*width: 100%;*/
+
                 }
             }
         </style>      
     </head>      
-<body background="./source/img/bg.jpg" style=" background-repeat:no-repeat;background-size:100% 100%;"> 
+<body background="./source/img/background.jpg" style=" background-repeat:no-repeat;background-size:100% 100%;"> 
 
     <div>
-        <h1>&nbsp;&nbsp;&nbsp;&nbsp;涵菁</br>Merry Christmas</h1>
+        <h1>涵菁</br></h1>
+		<h2>Merry</br> Christmas</h2>
         <!----><canvas id="d" ></canvas>
         <!-- <canvas id="c" style="position:absolute;z-index:-1;"></canvas>  -->
         <canvas id="canvas">Canvas is not supported in your browser.</canvas>
-        <!-- 弹窗 -->
-        <div id="myModal" class="modal">
-         
-          <!-- 关闭按钮 -->
-          <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
-         
-          <!-- 弹窗内容 -->
-          <img class="modal-content" id="img01">
+
         </div>
     </div>
-    <script>              
-        var collapsed = true; 
-        var file_path = './source/img/';           
-        function toggle()            
-        {                  
-            var fs = top.document.getElementsByTagName('frameset')[0];                
-            var f = fs.getElementsByTagName('frame');                
-            if (collapsed)                
-            {                      
-                fs.rows = '250px,*';                    
-                fs.noResize = false;                    
-                f[0].noResize = false;                      
-                f[1].noResize = false;
-            }                 
-            else
-            {                      
-                fs.rows = '30px,*';
-                fs.noResize = true;
-                f[0].noResize = true;
-                f[1].noResize = true;
-            }                  
-            collapsed = !collapsed;            
-        }
-    </script>  
+
 
     <script>              
         var b = document.body;            
@@ -249,7 +151,7 @@
         U=16;
         T=M.sin;
         E=M.sqrt;
-        for(O=k=0;x=z=j=i=k<150;)
+        for(O=k=0;x=z=j=i=k<200;)  <!-- 圣诞树大小-->
         with(M[k]=k?c.cloneNode(0):c)
         {    
             width=k?32:W= Width;
@@ -307,167 +209,19 @@
             L=J[i++];       
             a.drawImage        
             (            
-            M[L[3]+1],100+L[0]*A+L[2]*T(D)>>0,Height*0.6+(L[1]>>1))    )    
+            M[L[3]+1],Width*0.65	+L[0]*A+L[2]*T(D)>>0,Height*0.5+(L[1]>>1))    )    <!--圣诞树位置-->
             {   
-                if(!(i%7))        
+              /*  if(!(i%7))        
                 a.drawImage        
                 (
                 M[13],
                 ((157*(i*i)+T(D*5+i*i)*5)%W)>>0,
                 ((113*i+(D*i)/60)%(Height+i/99))>>0
-                );
+                );*/
             }    
             D+=.02
         },1)
-    </script>
-    <!--<script>
-    var canvas = document.getElementsByTagName('canvas')[1];
-    var ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'rgba(255, 255, 255, 0)';
-    //console.log('./'+file_path+'aixin'+i+'.png');
-    var wW = Width;
-    var wH = Height;
-    var Na = 1;
-    var Nx = 2;
-    var num1=14 //红心数
-    var num =27; //飞行物总数
-    var heartImages = [];
-    for(let i=0; i<Na; ++i){
-        heartImages.push(new Image());
-        heartImages[i].src = file_path+'aixin'+i+'.png';
-    }
-    for(let i=0; i<Nx; ++i) {
-        heartImages.push(new Image());
-        heartImages[i+Na].src = file_path+'xinfeng'+i+'.png';
-    }
-    heartImages.push(new Image());
-    heartImages[Na+Nx].src = file_path+'gift.png';
-    var hearts=[]; //心的数组
-    init(); //运行初始化函数
-
-    function init (){ //初始化画布的大小
-        canvas.width = wW;
-        canvas.height = wH;
-        for(var i=0; i<num; i++){
-            if(i<num1) hearts.push(new Heart(0));
-            else hearts.push(new Heart(1));
-        }
-        hearts.push(new Heart(0));
-        hearts[num].p = Nx+Na;
-        hearts[num].x=60;
-        hearts[num].y=160;
-        hearts[num].opacity=1;
-        hearts[num].scale=hearts[num].targetScal;
-        hearts[num].width = hearts[num].scale * hearts[num].initialW;
-        hearts[num].height = hearts[num].scale * hearts[num].initialH;
-        window.addEventListener('resize', function(){
-            wW = window.innerWidth;
-            wH = window.innerHeight;
-        });
-    }
-
-
-    function Heart(type){   //构造函数
-        this.x = Math.random() * wW;
-        this.y = Math.random() * wH;
-        this.opacity = Math.random() * .5 + .5;
-        this.vel = {   //位移参数 移动量和方向
-            x: (Math.random()-.5) * 2,
-            y: (Math.random()-.5) * 2,
-        };
-        if(type==0) {
-            this.p =Math.floor(Math.random() * Na);
-        }else {
-            this.p =Na + Math.floor(Math.random() * Nx);
-        }
-        this.initialW = 470;
-        this.initialH = 410;
-        this.initialW*.3;
-        this.initialH*.3;
-        this.targetScal = Math.random() * .1 + .15;  //最终大小缩放比例
-        this.scale = this.targetScal * Math.random();
-
-    }
-        Heart.prototype.update = function(){
-            if (this.p==Nx+Na) return;
-            let randx = Math.random();
-            let randy = Math.random();
-            this.x +=randx>0.01? this.vel.x:-this.vel.x;
-            this.y +=randy>0.01? this.vel.y:-this.vel.y;
-
-            if(this.x - this.width > 0.8*wW || this.x + this.width < 0.2*wW){
-                this.scale = 0; //重置缩放值
-                this.x = Math.random() * wW;
-                this.y = Math.random() * wH;
-            }
-            if(this.y - this.height > 0.8*wH || this.y + this.height < 0.2*wH){
-                this.scale = 0; //重置缩放值
-                this.x = Math.random() * wW;
-                this.y = Math.random() * wH;
-            }
-
-            this.scale += (this.targetScal - this.scale) * .1; //慢慢放大
-            this.width = this.scale * this.initialW;
-            this.height = this.scale * this.initialH;
-            };
-
-        Heart.prototype.draw = function(){
-            ctx.globalAlpha = this.opacity;
-            ctx.drawImage(heartImages[this.p], this.x, this.y, this.width, this.height)
-        };
-    function showHeart(){
-        ctx.clearRect(0, 0, wW, wH); //清空画布
-        var tmp=num-1;
-        if(!flag) {
-            ctx.moveTo(100,70);
-            ctx.lineTo(100,200);
-            ctx.lineWidth=1;
-            ctx.strokeStyle="red";
-            ctx.stroke();
-            tmp=num;
-        }
-        for(var i=0; i<=tmp; i++){
-            hearts[i].update();
-            hearts[i].draw();
-        }
-        setTimeout(showHeart,100);
-    }
-    var flag = false;
-    // function setFlag(){
-    //     //console.log(flag);
-    //     flag = !flag;
-    //     setTimeout(setFlag,5000);
-    // }
-    // setFlag();
-    showHeart();
-    var modal = document.getElementById('myModal');
-    var modalImg = document.getElementById("img01");
-    //modal.style.display = "block";
-    // c.addEventListener('click', function(){
-    //     var rect = d.getBoundingClientRect();
-    //     var x = event.clientX - rect.left * (canvas.width / rect.width);
-    //     var y = event.clientY - rect.top * (canvas.height / rect.height);
-
-    //     if(!flag && Math.sqrt(Math.pow((x-hearts[num].x),2)+Math.pow((y-hearts[num].y),2))<80){
-    //         var randg = Math.floor(Math.random() * 4);
-    //         modalImg.src = file_path+'gift'+randg+'.png';
-    //         modal.style.display = "block";
-    //         return;
-    //     }
-    //     // console.log("x:"+x);
-    //     // console.log("y:"+y);
-    //     for(var i=0; i<num; ++i) {
-    //         //console.log(hearts[i].x);
-    //         var dist = Math.sqrt(Math.pow((x-hearts[i].x),2)+Math.pow((y-hearts[i].y),2));
-    //         if(dist < 80) {
-    //             if(i<num1) modalImg.src = file_path+'xiangk'+i+'.png';
-    //             else modalImg.src = file_path+'xinzhi'+(i-num1)+'.png';
-    //             modal.style.display = "block";
-    //             return;
-    //         }
-    //     }
-    // })
-</script>-->
+    </script> 
 
     <script type="text/javascript">
         window.requestAnimationFrame = (function(){
@@ -630,5 +384,7 @@
         }
         window.onload = loop;
     </script>
+
 </body>
 </html>
+
