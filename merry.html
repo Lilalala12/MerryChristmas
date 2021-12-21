@@ -1,0 +1,454 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+    <TITLE> New Document </TITLE>
+    <META NAME="Generator" CONTENT="EditPlus">
+    <META NAME="Author" CONTENT="">
+    <META NAME="Keywords" CONTENT="">
+    <META NAME="Description" CONTENT="">
+
+    <style>
+        .divGlobal, .DivTop, .DivBottom {
+            min-width: 760px;
+            width: expression(document.body.clientWidth < 760? "760px": "100%" ) /*最小宽度设置*/;
+            width: 100%;
+        }
+
+        .divGlobal { /*border:1px solid #ff0000;*/
+        }
+
+        .DivTop, .DivBottom, .DivMainLeft, .DivMainRight {
+            border: 1px none  #ff0000; /*需要改为none */
+        }
+
+        .DivBottom {
+            clear: both;
+        }
+
+        .DivMainLeft {
+            float: left; /*指定段落的左侧或右侧不允许浮动的元素：*/
+        }
+
+        .DivMainRight {
+            margin-left:0px;
+        }
+
+        .DivFiexWidth {
+            width: 0px;
+        }
+
+        .DivMainRightChild {
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        ul.ul1 {
+            margin: 0px;
+            margin-left: 0px;
+            padding-left: 2%; /*fiexfox里需要设置此项,否则UR和DIV间会有空白*/
+            text-align: center;
+            margin:0 auto;
+        }
+
+        li.li1 {
+            margin-left: 0px;
+            list-style-type: none;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            font-size: 8rem;
+            text-shadow: 5px 5px 5px #CCFFFF, 0px 0px 2px #CCFFFF;
+            color: #0e1729;
+        }
+
+        li.li2 {
+            margin-left: 0px;
+            list-style-type: none;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            font-size: 8rem;
+            text-shadow: 5px 5px 5px #FF0033, 0px 0px 2px #FF0033;
+            color:#0e1729;
+        }
+
+        li.liBg {
+            margin-left: 0px;
+            background-color: #ffDD00;
+            list-style-type: none;
+            padding: 5px;
+        }
+        #canvas1{
+	        position:fixed;/*设置定位*/
+	        top:0;
+	        left:0;
+	        z-index:-1;/*使画布基于最低层*/
+	        /*background:#0e1729;/* 画布背景色 */*/
+        }
+        #starfield{
+            position:fixed;/*设置定位*/
+	        top:0;
+	        left:0;
+	        z-index:-2;/*使画布基于最低层*/
+	       background:#0e1729; /*画布背景色*/
+        }
+    </style>
+</HEAD>
+
+<BODY>
+    <canvas id="canvas1" >Canvas is not supported in your browser.</canvas>
+    <canvas id="starfield"></canvas>
+    <script>
+
+// alert(document.body.clientWidth);
+ //alert(document.body.clientWidth < 760? "760px": "100%" );
+    </script>
+    
+    <div class="DivTop">
+        <ul class="ul1">
+            <li class="li1">涵菁</li>
+            <li class="li2">Merry Christmas</li>
+        </ul>
+       
+    </div>
+    <div class="divGlobal">
+        <!--<div class="DivMainLeft">
+            <div class="DivFiexWidth">
+                <ul class="ul1">
+                    <li class="li1">涵菁</li>
+                    <li class="li2">Merry Christmas</li>
+                </ul>
+            </div>
+
+        </div>-->
+
+        <div class="DivMainRight">
+            <div class="DivMainRightChild">
+                <ul class="ul1">
+                    <canvas id="d"></canvas>
+                    <!--<li class="liBg">右边宽度自适应.</li>
+                    <li class="li1">右边宽度自适应</li>
+                    <li class="li1">右边宽度自适应</li>
+                    <li class="li1">右边宽度自适应</li>
+                    <li class="li1">右边宽度自适应</li>
+                    <li class="li1">右边宽度自适应</li>
+                    <li class="li1">右边宽度自适应</li>-->
+                </ul>
+            </div>
+            
+
+        </div>
+    </div>
+
+
+
+    <!--<div class="DivBottom">
+        DIV+CSS 布局一行两列,左列固定宽度,右列自适应宽度;设置最小宽度,窗口小的时候显示滚动条;firefox ie测试通过.
+        辛苦几天的结果啊
+        平行共三行,中间行分两列,左边固定宽度,右边自适应,并且对行宽度设置了最小值,如果窗口小到最小值以下将出现滚动条,这样一来布局就不会乱了.
+       
+    </div>-->
+
+    <script type="text/javascript">
+        window.requestAnimationFrame = (function(){
+            return window.requestAnimationFrame ||
+                   window.webkitRequestAnimationFrame ||
+                   window.mozRequestAnimationFrame ||
+                   function(callback){
+                        window.setTimeout(callback,1000/80);
+                   }
+        })();
+
+        var canvas = document.getElementById("canvas1"),
+            ctx = canvas.getContext("2d"),
+            cw = window.innerWidth,
+            ch = window.innerHeight,
+            fireworks = [],
+            particles = [],
+            hue = 120,
+            timerTotal = 10,
+            timerTick = 0;
+
+        canvas.width = cw;
+        canvas.height = ch;
+
+
+        function random(min,max){
+            return Math.random()*(max-min)+min;
+        }
+
+        function caculateDistance(sx,sy,tx,ty){
+            var xDistance = sx-tx,
+                yDistance = sy-ty;
+            return Math.sqrt(Math.pow(xDistance,2)+Math.pow(yDistance,2));
+        }
+
+        function Firework(sx,sy,tx,ty){
+            this.x = sx;
+            this.y = sy;
+            this.sx = sx;
+            this.sy = sy;
+            this.tx= tx;
+            this.ty = ty;
+            this.distanceToTarget = caculateDistance(sx,sy,tx,ty);
+            this.distanceTraveled = 0;
+            this.coordinates = [];
+            this.coordinatesCount = 3;
+            while(this.coordinatesCount--){
+                this.coordinates.push([this.x,this.y]);
+            }
+            this.angle = Math.atan2(ty-sy,tx-sx);
+            this.speed = 10;
+            this.acceleration = 1.05
+            this.brightness = random(50,70);
+            this.targetRadius = 1;
+        }
+
+        Firework.prototype.update = function(index){
+            this.coordinates.pop();
+            this.coordinates.unshift([this.x,this.y]);
+
+            if(this.targetRadius<8) {
+                this.targetRadius += 0.3;
+            } else {
+                this.targetRadius = 1;
+            }
+            this.speed *= this.acceleration;
+            var vx = Math.cos(this.angle)*this.speed,
+                vy = Math.sin(this.angle)*this.speed;
+            this.distanceTraveled = caculateDistance(this.sx,this.sy,this.x+vx,this.y+vy);
+            if(this.distanceTraveled>=this.distanceToTarget){
+                createParticles(this.tx,this.ty);
+                fireworks.splice(index,1);
+            }else{
+                this.x += vx;
+                this.y += vy;
+            }
+        }
+
+        Firework.prototype.draw = function(){
+
+            ctx.beginPath();
+            ctx.moveTo(this.coordinates[this.coordinates.length-1][0],this.coordinates[this.coordinates.length-1][1]);
+            ctx.lineTo(this.x,this.y);
+            ctx.strokeStyle = 'hsl('+hue+',100%,'+this.brightness+'%)';
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(this.tx,this.ty,this.targetRadius,0,Math.PI*2);
+            ctx.stroke();
+        }
+
+        function Particle(x,y){
+            this.x = x;
+            this.y = y;
+            this.coordinates = [];
+            this.coordinatesCount = 5;
+            while(this.coordinatesCount--){
+                this.coordinates.push([this.x,this.y]);
+            }
+            this.angle = random(0,2*Math.PI);
+            this.speed = random(1,5);
+            this.friction = 0.95
+            this.gravity = 1;
+            this.hue = random(hue - 20, hue + 20);       //生成与烟花色彩相近的碎屑
+            this.brightness = random(40, 70);        //随机明度    
+            this.alpha = 1;                         //初始透明度
+            this.decay = random(0.006, 0.03);       //碎屑消失时间
+        }
+
+        Particle.prototype.update = function(index){
+            this.coordinates.pop();
+            this.coordinates.unshift([this.x,this.y]);
+            this.speed *= this.friction;
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed + this.gravity;
+            this.alpha -= this.decay;
+            if(this.alpha<=this.decay){
+                particles.splice(index,1);
+            }
+        }
+
+        Particle.prototype.draw = function(){
+            ctx.beginPath();
+            ctx.moveTo(this.coordinates[this.coordinates.length-1][0],this.coordinates[this.coordinates.length-1][1]);
+            ctx.lineTo(this.x,this.y);
+            ctx.strokeStyle = 'hsla('+this.hue+',100%,'+this.brightness+'%,'+this.alpha+')';
+            ctx.stroke();
+        }
+
+        function createParticles(x,y){
+            var particleCount = 100;
+            while(particleCount--) {
+                particles.push(new Particle(x,y));
+            }
+        }
+
+        function loop(){
+            requestAnimationFrame(loop);
+            hue += 0.5;
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.fillRect( 0, 0, cw, ch );
+            ctx.globalCompositeOperation = 'lighter';
+            var i = fireworks.length;
+            while(i--) {
+                fireworks[i].draw();
+                fireworks[i].update(i);
+            }
+            var i = particles.length;
+            while(i--) {
+                particles[i].draw();
+                particles[i].update(i);
+            }
+            if(timerTick >= timerTotal) {
+                fireworks.push(new Firework(cw/2,ch,random(0,cw),random(0,ch/2)));
+                timerTick = 0;
+            } else {
+                timerTick++;
+            }
+        }
+        window.onload = loop;
+    </script>
+    <script>
+        var canvas;
+        var stars_count;
+        var stars;
+        ini();
+        makeStars();
+        var interval = setInterval(function () { drawStars(); }, 80);//定时刷新星星数据
+
+        function ini() {//初始化
+            canvas = document.getElementById("starfield");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            context = canvas.getContext("2d");
+            stars = Array();//数组存放随机生成的星星数据（x,y,大小，颜色，速度）
+            stars_count = 500;//星星数量
+            clearInterval(interval);
+        }
+
+        function makeStars() {//随机生成星星数据
+            for (var i = 0; i < stars_count; i++) {
+                let x = Math.random() * canvas.offsetWidth;
+                let y = Math.random() * canvas.offsetHeight;
+                let radius = Math.random() * 1.1;
+                let color = "rgba(" + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 255 + ",0.8)";
+                let speed = Math.random() * 0.5;
+                let arr = { 'x': x, 'y': y, 'radius': radius, 'color': color, 'speed': speed };//（x,y,大小，颜色，速度）
+                stars.push(arr);//随机生成的星星数据存在这里
+            }
+        }
+
+        function drawStars() {//把星星画到画布上
+            context.fillStyle = "#0e1729";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            for (var i = 0; i < stars.length; i++) {
+                var x = stars[i]['x'] - stars[i]['speed'];
+                if (x < -2 * stars[i]['radius']) x = canvas.width;
+                stars[i]['x'] = x;
+                var y = stars[i]['y'];
+                var radius = stars[i]['radius'];
+                context.beginPath();
+                context.arc(x, y, radius * 2, 0, 2 * Math.PI);
+                context.fillStyle = "rgba(" + Math.random() * 255 + "," + Math.random() * 255 + "," + Math.random() * 255 + ",0.8)";
+                context.fill();
+            }
+        }
+
+        window.onresize = function () {//窗口大小发生变化时重新随机生成星星数据
+            ini();
+            makeStars();
+            interval = setInterval(function () { drawStars(); }, 50);
+        }
+
+    </script>
+    <script>
+
+        var b = document.body;
+        var c = document.getElementsByTagName('canvas')[2];
+        var a = c.getContext('2d');
+        document.body.clientWidth;
+    </script>  
+
+    <script>
+        // console.log(window.innerWidth);
+        // console.log(window.innerHeight);
+        var Width=window.innerWidth;
+        var Height=window.innerHeight;
+        M=Math;
+        Q=M.random;J=[];
+        U=16;
+        T=M.sin;
+        E=M.sqrt;
+        for(O=k=0;x=z=j=i=k<300;)  <!-- 圣诞树大小-->
+        with(M[k]=k?c.cloneNode(0):c)
+        {
+            width=k?32:W= Width;
+            height=k?32: Height;
+            with(getContext('2d'))
+            if(k>10|!k)
+            for(
+            font='50px Impact',
+            V='rgba(';I=i*U,fillStyle=k?k==13?V+'205,205,215,.15)':
+            V+(147+I)+','+(k%2?128+I:0)+','+I+',.5)':'#cca',i<7;
+            )
+            beginPath(
+            fill(
+            arc(
+            U-i/3,
+            24-i/2,
+            k==13?4-(i++)/2:8-i++,
+            0,
+            M.PI*2,1
+            )
+            )
+            );
+            else for(;
+            x=T(i),
+            y=Q()*2-1,
+            D=x*x+y*y,
+            B=E(D-x/.9-1.5*y+1),
+            R=80*(B+1)*(L=k/9+.8)>>1,
+            i++<W;
+            )
+            if(D<1)
+            beginPath(
+            strokeStyle=V+R+','+(R+B*L>>0)+',40,.1)'
+            ),
+            moveTo(U+x*8,U+y*8),
+            lineTo(U+x*U,U+y*U),
+            stroke();
+            for(
+            y=H=k+E(k++)*25,
+            R=Q()*W;
+            P=3,j<H;
+            )
+            J[O++]=[x+=T(R)*P+Q()*6-3,y+=Q()*U-8,z+=T(R-11)*P+Q()*6-3,j/H*20+((j+=U)>H&Q()>.8?Q(P=9)*4:0)>>1]
+        }
+        setInterval(function G(m,l)
+        {
+            A=T(D-11);
+            if(l)
+            return(
+            m[2]-l[2])*A+(l[0]-m[0])*T(D);
+            a.clearRect(0,0,W,W);
+            J.sort(G);
+            for(
+            i=0;
+            L=J[i++];
+            a.drawImage
+            (
+            M[L[3]+1],Width*0.47	+L[0]*A+L[2]*T(D)>>0,Height*0.05+(L[1]>>1))    )    <!--圣诞树位置-->
+            {
+              /*  if(!(i%7))
+                a.drawImage
+                (
+                M[13],
+                ((157*(i*i)+T(D*5+i*i)*5)%W)>>0,
+                ((113*i+(D*i)/60)%(Height+i/99))>>0
+                );*/
+            }
+            D+=.02
+        },1)
+    </script> 
+</BODY>
+</HTML>
