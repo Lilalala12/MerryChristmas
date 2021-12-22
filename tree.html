@@ -339,7 +339,7 @@
             this.hue = random(hue - 20, hue + 20);       //生成与烟花色彩相近的碎屑
             this.brightness = random(40, 70);        //随机明度
             this.alpha = 1;                         //初始透明度
-            this.decay = random(0.006, 0.03);       //碎屑消失时间
+            this.decay = random(0.004, 0.01);       //碎屑消失时间
         }
 
         Particle.prototype.update = function(index){
